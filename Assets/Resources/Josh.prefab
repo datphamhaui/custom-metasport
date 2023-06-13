@@ -4470,8 +4470,8 @@ GameObject:
   - component: {fileID: 7453951345172295610}
   - component: {fileID: 2106184222506467577}
   - component: {fileID: 3480372245707385219}
-  - component: {fileID: 3010522126520306826}
   - component: {fileID: 1824425218097479687}
+  - component: {fileID: -4555519359981461782}
   m_Layer: 6
   m_Name: Josh
   m_TagString: Player
@@ -4563,12 +4563,13 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3424684518598381820}
+  - {fileID: 7160939126304609794}
   - {fileID: 6903625828664593013}
   - {fileID: 7453951345172295610}
   - {fileID: 3480372245707385219}
+  - {fileID: -4555519359981461782}
   - {fileID: 3624135441417559087}
-  SimulationBehaviours:
-  - {fileID: 7160939126304609794}
+  SimulationBehaviours: []
 --- !u!114 &3424684518598381820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4609,6 +4610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   MoveSpeed: 2
   SprintSpeed: 5.335
   RotationSmoothTime: 0.12
@@ -4675,10 +4677,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _move: {x: 0, y: 0}
-  _look: {x: 0, y: 0}
-  _jump: 0
-  _sprint: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -4844,15 +4842,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
---- !u!81 &3010522126520306826
-AudioListener:
+--- !u!114 &1824425218097479687
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7160939126304609801}
   m_Enabled: 0
---- !u!114 &1824425218097479687
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4887dc847f32a104db6ba89111598d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 3789238021295604787}
+  text: {fileID: 1457801208382083521}
+--- !u!114 &-4555519359981461782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4861,11 +4865,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7160939126304609801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4887dc847f32a104db6ba89111598d11, type: 3}
+  m_Script: {fileID: 11500000, guid: 6376dd7fc23b3764483a7349b58502e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 3789238021295604787}
-  text: {fileID: 1457801208382083521}
+  _interpolationDataSource: 0
 --- !u!1 &7265248627109680244
 GameObject:
   m_ObjectHideFlags: 0
@@ -5978,6 +5981,10 @@ PrefabInstance:
     - target: {fileID: 1413488982225052477, guid: 038c6100762513d4cbdc1f995c0d8c4a, type: 3}
       propertyPath: m_Name
       value: PlayerCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413488983426659301, guid: 038c6100762513d4cbdc1f995c0d8c4a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5072933519092435226, guid: 038c6100762513d4cbdc1f995c0d8c4a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target

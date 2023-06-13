@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
 {
     #region
-    [SerializeField] public GameObject _playerPrefab;
+    [SerializeField] public GameObject[] _playerPrefabs;
     [SerializeField] private GameObject loadingPanel;
 
 
@@ -72,9 +72,10 @@ public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log("OnPlayerJoined " + runner.IsServer);
+        Debug.Log("OnPlayerJoined " + PlayerPrefs.GetInt("IndexPrefabs"));
+        GameObject _playerPrefabSelected = _playerPrefabs[MyClikc.x];
         Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
-        NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+        NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
         loadingPanel.SetActive(false);
     }
 
