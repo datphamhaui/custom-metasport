@@ -76,7 +76,7 @@ public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
 
         if (runner.IsServer)
         {
-            GameObject _playerPrefabSelected = _playerPrefabs[MyClikc.x];
+            GameObject _playerPrefabSelected = _playerPrefabs[0];
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
             

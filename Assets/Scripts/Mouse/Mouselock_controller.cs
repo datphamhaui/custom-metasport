@@ -53,7 +53,7 @@ public class Mouselock_controller : MonoBehaviour
     {
         if (!playerIsIn)
         {
-            player = GameObject.FindGameObjectWithTag("photonmanager").GetComponent<ManagerFusion>()._playerPrefab.GetComponent<PlayerInput>();
+            player = GameObject.FindGameObjectWithTag("photonmanager").GetComponent<ManagerFusion>()._playerPrefabs[0].GetComponent<PlayerInput>();
             playerIsIn = true;
         }
 

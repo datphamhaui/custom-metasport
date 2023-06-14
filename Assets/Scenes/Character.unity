@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1911972851}
-  m_IndirectSpecularColor: {r: 0.8139963, g: 0.86716896, b: 0.9467371, a: 1}
+  m_IndirectSpecularColor: {r: 0.72715944, g: 0.90855217, b: 0.7634533, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   previousButtonShoes: {fileID: 341012947}
   pc: {fileID: 0}
   myPrefab:
-  - {fileID: 7160939126304609801, guid: bc41bed9bba809d498243dcc970aef65, type: 3}
+  - {fileID: 7160939126304609801, guid: 28ad7654ab298b648b627a65776aabba, type: 3}
   - {fileID: 7160939126304609801, guid: 0d2536dee6f35fd4291a96b4360c4d00, type: 3}
   - {fileID: 7160939126304609801, guid: 0c4cb692b57e66e46b6d18e4df17b4f9, type: 3}
   NickName: {fileID: 1025939464}
