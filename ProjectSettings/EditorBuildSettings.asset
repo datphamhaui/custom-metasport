@@ -8,16 +8,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LoginScene_01.unity
     guid: 446b0cfbd21309042b8625b2539fa57d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CharacterSelection.unity
     guid: f0d8c8939e9fb7547afb5c02d190f523
+  - enabled: 1
+    path: Assets/Scenes/Character.unity
+    guid: b5b481369180e2445a639367db17370e
   - enabled: 1
     path: Assets/Scenes/GameFusion.unity
     guid: d6db472bf4346944683087dd914aabf7
   - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Kayak.unity
     guid: 4506f3451dc234140a903dacbeb30cff
   m_configObjects: {}

@@ -2068,8 +2068,7 @@ MonoBehaviour:
   pc: {fileID: 0}
   myPrefab:
   - {fileID: 7160939126304609801, guid: 28ad7654ab298b648b627a65776aabba, type: 3}
-  - {fileID: 7160939126304609801, guid: 0d2536dee6f35fd4291a96b4360c4d00, type: 3}
-  - {fileID: 7160939126304609801, guid: 0c4cb692b57e66e46b6d18e4df17b4f9, type: 3}
+  - {fileID: 7160939126304609801, guid: 628b5d788f47b124eb191ee07497cf7b, type: 3}
   NickName: {fileID: 1025939464}
 --- !u!1 &810085555
 GameObject:

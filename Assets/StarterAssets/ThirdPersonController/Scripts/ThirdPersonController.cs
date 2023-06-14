@@ -142,20 +142,20 @@ namespace StarterAssets
 
         private void Start()
         {
-            var cinemachineVirtualCameraObject = GameObject.Find("third person shoot");
-            CinemachineCamTarget = gameObject.transform.Find("CameraRoot");
-            cinemachineVirtualCameraObject.GetComponent<CinemachineFreeLook>().Follow = CinemachineCamTarget.transform;
-            cinemachineVirtualCameraObject.GetComponent<CinemachineFreeLook>().LookAt = CinemachineCamTarget.transform;
+            //var cinemachineVirtualCameraObject = GameObject.Find("third person shoot");
+            //CinemachineCamTarget = gameObject.transform.Find("CameraRoot");
+            //cinemachineVirtualCameraObject.GetComponent<CinemachineFreeLook>().Follow = CinemachineCamTarget.transform;
+            //cinemachineVirtualCameraObject.GetComponent<CinemachineFreeLook>().LookAt = CinemachineCamTarget.transform;
 
-            PlayerFollowCamera = GameObject.Find("third person shoot");
-            PlayerFollowCamera.GetComponent<CinemachineFreeLook>().Follow = CinemachineCamTarget.transform;
-            PlayerFollowCamera.GetComponent<CinemachineFreeLook>().LookAt = CinemachineCamTarget.transform;
+            //PlayerFollowCamera = GameObject.Find("third person shoot");
+            //PlayerFollowCamera.GetComponent<CinemachineFreeLook>().Follow = CinemachineCamTarget.transform;
+            //PlayerFollowCamera.GetComponent<CinemachineFreeLook>().LookAt = CinemachineCamTarget.transform;
 
-            var test = GameObject.Find("fps");
-            test.GetComponent<CinemachineVirtualCamera>().Follow = GameObject.Find("fpsRoot").transform;
-            CinemachineCamTarget2 = gameObject.transform.Find("fpsRoot");
-            PlayerFollowCamera2 = GameObject.Find("fps");
-            PlayerFollowCamera2.GetComponent<CinemachineVirtualCamera>().Follow = CinemachineCamTarget2.transform;
+            //var test = GameObject.Find("fps");
+            //test.GetComponent<CinemachineVirtualCamera>().Follow = GameObject.Find("fpsRoot").transform;
+            //CinemachineCamTarget2 = gameObject.transform.Find("fpsRoot");
+            //PlayerFollowCamera2 = GameObject.Find("fps");
+            //PlayerFollowCamera2.GetComponent<CinemachineVirtualCamera>().Follow = CinemachineCamTarget2.transform;
 
 
             // ***************************
