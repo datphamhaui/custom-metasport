@@ -105,7 +105,7 @@ public class playerstats_controller : NetworkBehaviour
         return x;
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_SetSkinn(int a, int b, int c)
     {
         top_wear.material = myColors[a];

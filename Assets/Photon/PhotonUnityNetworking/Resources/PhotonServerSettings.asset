@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: e087cf36-533e-4ae9-8e35-79f2cae38cbf
+    AppIdRealtime: ad1347c2-ffcf-438c-95d9-38192f27b683
     AppIdFusion: 
-    AppIdChat: 47ac65ba-8acb-4cea-9703-455874b4d953
-    AppIdVoice: 63a7bb17-c981-4d87-96d2-426e756bd23e
-    AppVersion: 0.1
+    AppIdChat: 24d76c83-addf-4db1-98b9-2eac60a80977
+    AppIdVoice: 278b7aa5-fb05-4d30-b181-50c1d7e6836d
+    AppVersion: 
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -40,10 +40,8 @@ MonoBehaviour:
   - DestroyRpc
   - HeresWhy
   - ChangeAvatar
-  - Emote
   - Log
   - LogPrivate
-  - SetSkinn
   - Talking
   DisableAutoOpenWizard: 1
   ShowSettings: 1

@@ -10,201 +10,199 @@ public class MyClikc : MonoBehaviour
 {
     // Start is called before the first frame update
     public Button nextButton;
+	
+	public Button previousButton;
+	
+	public Button loadButton;
 
-    public Button previousButton;
+	public Button nextButtonTop;
 
-    public Button loadButton;
+	public Button nextButtonBottom;
 
-    public Button nextButtonTop;
+	public Button nextButtonShoes;
 
-    public Button nextButtonBottom;
+	public Button previousButtonTop;
 
-    public Button nextButtonShoes;
+	public Button previousButtonBottom;
 
-    public Button previousButtonTop;
+	public Button previousButtonShoes;
 
-    public Button previousButtonBottom;
+	public playerstats_controller pc;
+	
+	public GameObject[] myPrefab;
+	
+	public GameObject NickName;
+	
+	private int x = 0;
+	
+	GameObject player;
+	
+	TextMeshProUGUI mText;
 
-    public Button previousButtonShoes;
+	void Start () {
 
-    public playerstats_controller pc;
+		Cursor.lockState = CursorLockMode.None;
+		
+		Cursor.visible = true;
 
-    public GameObject[] myPrefab;
+		mText = NickName.GetComponent<TextMeshProUGUI>();
+		
+		player = Instantiate(myPrefab[0], new Vector3(883.57f, 0.58f, -9.29f), Quaternion.identity);
+		
+		pc = player.GetComponent<playerstats_controller>();
 
-    public GameObject NickName;
-    [HideInInspector]
-    public static int x = 0;
-
-    GameObject player;
-
-    TextMeshProUGUI mText;
-
-    void Start()
-    {
-
-        Cursor.lockState = CursorLockMode.None;
-
-        Cursor.visible = true;
-
-        mText = NickName.GetComponent<TextMeshProUGUI>();
-
-        player = Instantiate(myPrefab[0], new Vector3(0, 0.1f, -1.6f), Quaternion.identity);
-
-        pc = player.GetComponent<playerstats_controller>();
-
-        foreach (Transform child in player.transform)
+		foreach (Transform child in player.transform)
         {
-            child.gameObject.SetActive(false);
+			child.gameObject.SetActive(false);
         }
+		
+		player.transform.GetChild(0).gameObject.SetActive(true);
+		
+		player.transform.GetChild(1).gameObject.SetActive(true);
+		
+		player.GetComponent<ThirdPersonController>().enabled=false;
+		
+		player.GetComponent<playerstats_controller>().enabled = false;
+		
+		player.GetComponent<Mouse_highlighter>().enabled = false;
 
-        player.transform.GetChild(0).gameObject.SetActive(true);
+		player.GetComponent<push2talk>().enabled = false;
 
-        player.transform.GetChild(1).gameObject.SetActive(true);
+		player.transform.Rotate(new Vector3(0, 180, 0));
 
-        player.GetComponent<ThirdPersonController>().enabled = false;
+		PlayerPrefs.SetString("PrefabName", myPrefab[x].name);
+		
+		nextButton.onClick.AddListener(ShowNextCharacter);
+		
+		previousButton.onClick.AddListener(ShowPreviousCharacter);
+		
+		loadButton.onClick.AddListener(SceneLoader);
 
-        player.GetComponent<playerstats_controller>().enabled = false;
+		nextButtonTop.onClick.AddListener(pc.TopIncrement);
 
-        player.GetComponent<Mouse_highlighter>().enabled = false;
+		previousButtonTop.onClick.AddListener(pc.TopDecrement);
 
-        player.GetComponent<push2talk>().enabled = false;
+		nextButtonBottom.onClick.AddListener(pc.BottomIncrement);
 
-        player.transform.Rotate(new Vector3(0, 180, 0));
+		previousButtonBottom.onClick.AddListener(pc.BottomDecrement);
 
-        PlayerPrefs.SetString("PrefabName", myPrefab[x].name);
+		nextButtonShoes.onClick.AddListener(pc.ShoesIncrement);
 
-        nextButton.onClick.AddListener(ShowNextCharacter);
+		previousButtonShoes.onClick.AddListener(pc.ShoesIncrement);
 
-        previousButton.onClick.AddListener(ShowPreviousCharacter);
-
-        loadButton.onClick.AddListener(SceneLoader);
-
-        nextButtonTop.onClick.AddListener(pc.TopIncrement);
-
-        previousButtonTop.onClick.AddListener(pc.TopDecrement);
-
-        nextButtonBottom.onClick.AddListener(pc.BottomIncrement);
-
-        previousButtonBottom.onClick.AddListener(pc.BottomDecrement);
-
-        nextButtonShoes.onClick.AddListener(pc.ShoesIncrement);
-
-        previousButtonShoes.onClick.AddListener(pc.ShoesIncrement);
-
-        mText.SetText(myPrefab[x].name);
-    }
+		mText.SetText(myPrefab[x].name);
+	}
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+		if (Input.GetKeyDown(KeyCode.LeftControl))
+		{
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
+		
+	}
+    void ShowNextCharacter(){
 
-    }
-    void ShowNextCharacter()
+		Destroy(player);
+		
+		x = (x + 1) % myPrefab.Length;
+
+		mText.SetText(myPrefab[x].name);
+
+		player = Instantiate(myPrefab[x], new Vector3(883.57f, 0.58f, -9.29f), Quaternion.identity);
+		
+		pc = player.GetComponent<playerstats_controller>();
+		
+		player.GetComponent<Mouse_highlighter>().enabled = false;
+		
+		foreach (Transform child in player.transform)
+		{
+			child.gameObject.SetActive(false);
+		}
+		
+		player.transform.GetChild(0).gameObject.SetActive(true);
+		
+		player.transform.GetChild(1).gameObject.SetActive(true);
+
+		player.GetComponent<ThirdPersonController>().enabled = false;
+
+		player.GetComponent<playerstats_controller>().enabled = false;
+
+		player.GetComponent<Mouse_highlighter>().enabled = false;
+
+		player.GetComponent<push2talk>().enabled = false;
+
+		player.transform.Rotate(new Vector3(0, 180, 0));
+
+		nextButtonTop.onClick.AddListener(pc.TopIncrement);
+
+		previousButtonTop.onClick.AddListener(pc.TopDecrement);
+
+		nextButtonBottom.onClick.AddListener(pc.BottomIncrement);
+
+		previousButtonBottom.onClick.AddListener(pc.BottomDecrement);
+
+		nextButtonShoes.onClick.AddListener(pc.ShoesIncrement);
+
+		previousButtonShoes.onClick.AddListener(pc.ShoesIncrement);
+
+	}
+
+	void ShowPreviousCharacter()
+	{
+		Destroy(player);
+
+		x = x - 1;
+		if(x < 0)
+        {
+			x = myPrefab.Length - 1;
+		}
+
+		mText.SetText(myPrefab[x].name);
+
+		player = Instantiate(myPrefab[x], new Vector3(883.57f, 0.58f, -9.29f), Quaternion.identity);
+		
+		foreach (Transform child in player.transform)
+		{
+			child.gameObject.SetActive(false);
+		}
+
+		player.transform.GetChild(0).gameObject.SetActive(true);
+		
+		player.transform.GetChild(1).gameObject.SetActive(true);
+
+		player.GetComponent<ThirdPersonController>().enabled = false;
+
+		player.GetComponent<playerstats_controller>().enabled = false;
+
+		player.GetComponent<Mouse_highlighter>().enabled = false;
+
+		player.GetComponent<push2talk>().enabled = false;
+
+		player.transform.Rotate(new Vector3(0, 180, 0));
+
+	}
+
+	void SceneLoader()
     {
+		PlayerPrefs.SetString("PrefabName", myPrefab[x].name);
 
-        Destroy(player);
+		PlayerPrefs.SetInt("Top_wear", pc.i);
 
-        x = (x + 1) % myPrefab.Length;
+		PlayerPrefs.SetInt("Bottom_wear", pc.j);
 
-        mText.SetText(myPrefab[x].name);
+		PlayerPrefs.SetInt("Shoes", pc.k);
 
-        player = Instantiate(myPrefab[x], new Vector3(0, 0.1f, -1.6f), Quaternion.identity);
+		PlayerPrefs.Save();
+		
+		SceneManager.LoadScene("GameFusion");
 
-        pc = player.GetComponent<playerstats_controller>();
+	}
 
-        player.GetComponent<Mouse_highlighter>().enabled = false;
-
-        foreach (Transform child in player.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-
-        player.transform.GetChild(0).gameObject.SetActive(true);
-
-        player.transform.GetChild(1).gameObject.SetActive(true);
-
-        player.GetComponent<ThirdPersonController>().enabled = false;
-
-        player.GetComponent<playerstats_controller>().enabled = false;
-
-        player.GetComponent<Mouse_highlighter>().enabled = false;
-
-        player.GetComponent<push2talk>().enabled = false;
-
-        player.transform.Rotate(new Vector3(0, 180, 0));
-
-        nextButtonTop.onClick.AddListener(pc.TopIncrement);
-
-        previousButtonTop.onClick.AddListener(pc.TopDecrement);
-
-        nextButtonBottom.onClick.AddListener(pc.BottomIncrement);
-
-        previousButtonBottom.onClick.AddListener(pc.BottomDecrement);
-
-        nextButtonShoes.onClick.AddListener(pc.ShoesIncrement);
-
-        previousButtonShoes.onClick.AddListener(pc.ShoesIncrement);
-
-    }
-
-    void ShowPreviousCharacter()
-    {
-        Destroy(player);
-
-        x = x - 1;
-        if (x < 0)
-        {
-            x = myPrefab.Length - 1;
-        }
-
-        mText.SetText(myPrefab[x].name);
-
-        player = Instantiate(myPrefab[x], new Vector3(0, 0.1f, -1.6f), Quaternion.identity);
-
-        foreach (Transform child in player.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-
-        player.transform.GetChild(0).gameObject.SetActive(true);
-
-        player.transform.GetChild(1).gameObject.SetActive(true);
-
-        player.GetComponent<ThirdPersonController>().enabled = false;
-
-        player.GetComponent<playerstats_controller>().enabled = false;
-
-        player.GetComponent<Mouse_highlighter>().enabled = false;
-
-        player.GetComponent<push2talk>().enabled = false;
-
-        player.transform.Rotate(new Vector3(0, 180, 0));
-
-    }
-
-    void SceneLoader()
-    {
-        PlayerPrefs.SetString("PrefabName", myPrefab[x].name);
-
-        PlayerPrefs.SetInt("Top_wear", pc.i);
-
-        PlayerPrefs.SetInt("Bottom_wear", pc.j);
-
-        PlayerPrefs.SetInt("Shoes", pc.k);
-
-        PlayerPrefs.Save();
-
-        SceneManager.LoadScene("GameFusion");
-
-    }
-
-
-
-    /*void OnApplicationFocus(bool hasFocus)
+	
+	
+	/*void OnApplicationFocus(bool hasFocus)
 	{
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;

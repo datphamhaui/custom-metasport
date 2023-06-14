@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using Fusion;
 
 public class EmoteSystem : NetworkBehaviour
@@ -12,15 +15,15 @@ public class EmoteSystem : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Object.HasInputAuthority)
-        //{
-        //    if (NonUIInput.GetKeyDown(KeyCode.I))
-        //    {
-        //        RPC_Emote();            
+        if (Object.HasStateAuthority)
+        {
+            if (NonUIInput.GetKeyDown(KeyCode.I))
+            {
+                RPC_Emote();            
 
-        //    }
+            }
 
-        //}
+        }
         
     }
 

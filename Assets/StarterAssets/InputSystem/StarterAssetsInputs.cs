@@ -8,9 +8,13 @@ namespace StarterAssets
 {
     public class StarterAssetsInputs : NetworkBehaviour
     {
+        [Networked]
         public Vector2 move { get; set; }
+        [Networked]
         public Vector2 look { get; set; }
+        [Networked]
         public bool jump { get; set; }
+        [Networked]
         public bool sprint { get; set; }
 
         [Header("Movement Settings")]

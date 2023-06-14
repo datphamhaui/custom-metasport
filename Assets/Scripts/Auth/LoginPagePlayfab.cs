@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -7,6 +7,13 @@ using PlayFab.ClientModels;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Text;
+
+using TreeEditor;
+using UnityEngine.Networking;
 
 public class LoginPagePlayfab : MonoBehaviour
 {
@@ -24,9 +31,12 @@ public class LoginPagePlayfab : MonoBehaviour
     [SerializeField] TMP_InputField PasswordRegisterinput;
     [SerializeField] GameObject RegisterPage;
 
-    [Header("Recovery")]   
-    [SerializeField] TMP_InputField EmailRecoveryInput;  
-    [SerializeField] GameObject RecoverPage;
+    //[Header("Recovery")]
+    //[SerializeField] TMP_InputField EmailRecoveryInput;
+    //[SerializeField] GameObject RecoverPage;
+
+
+
 
     void Start()
     {
@@ -36,13 +46,12 @@ public class LoginPagePlayfab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.name == "PasswordLoginInputfield")
+
+        if (Input.GetKeyUp(KeyCode.Return))
         {
-            if (Input.GetKeyUp(KeyCode.Return))
-            {
-                Login();
-            }
+
         }
+
 
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -63,32 +72,107 @@ public class LoginPagePlayfab : MonoBehaviour
 
 
     }
+    //--------------------------------------------------------------------------------------------------------
     #region Buttom Functions
-    public void RegisterUser()
+    public class RegisterData
     {
-       // if statement if password is less than 6 messeage text = Too short password; 
-
-
-        var request = new RegisterPlayFabUserRequest
-        {
-            DisplayName = UsernameRegisterInput.text,
-            Username = UsernameRegisterInput.text,
-            Email = EmailRegisterInput.text,
-            Password = PasswordRegisterinput.text,
-
-            RequireBothUsernameAndEmail = false
-        };
-
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
+        public string username;
+        public string email;
+        public string password;
     }
-   public void Login()
+
+    public void Register()
     {
-        var request = new LoginWithEmailAddressRequest
+        StartCoroutine(RegisterInfo());
+    }
+
+    private IEnumerator RegisterInfo()
+    {
+        string username = UsernameRegisterInput.text;
+        string email = EmailRegisterInput.text;
+        string password = PasswordRegisterinput.text;
+
+        RegisterData registerData = new RegisterData
         {
-            Email = EmailLoginInput.text,
-            Password = PasswordLoginput.text,
+            username = username,
+            email = email,
+            password = password
         };
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucces, OnError);
+
+        string jsonData = JsonUtility.ToJson(registerData);
+
+        // Tạo yêu cầu HTTP POST đến Strapi để lưu trữ dữ liệu
+        UnityWebRequest saveRequest = new UnityWebRequest("http://localhost:1337/api/auth/local/register", "POST");
+        byte[] saveData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        saveRequest.uploadHandler = new UploadHandlerRaw(saveData);
+        saveRequest.downloadHandler = new DownloadHandlerBuffer();
+        saveRequest.SetRequestHeader("Content-Type", "application/json");
+
+        // Gửi yêu cầu và đợi phản hồi
+        yield return saveRequest.SendWebRequest();
+
+        if (saveRequest.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Data saved on Strapi");
+
+        }
+        else
+        {
+            Debug.Log("Failed to save data on Strapi");
+        }
+    }
+    //-------------------------------------------------------------------------------------
+    private const string apiUrl = "http://localhost:1337/api/auth/local";
+
+    public class LoginData
+    {
+        public string identifier;
+        public string password;
+    }
+
+    public void Login()
+    {
+        StartCoroutine(LoginRequest());
+    }
+
+    private IEnumerator LoginRequest()
+    {
+
+        string email = EmailLoginInput.text;
+        string password = PasswordLoginput.text;
+        var requestBody = new LoginData
+        {
+            identifier = email,
+            password = password
+        };
+
+        var jsonRequestBody = JsonUtility.ToJson(requestBody);
+        var request = new UnityWebRequest(apiUrl, "POST");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            var responseContent = request.downloadHandler.text;
+            var responseData = JsonUtility.FromJson<ResponseData>(responseContent);
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+        else
+        {
+
+        }
+    }
+
+    private class ResponseData
+    {
+        public string user;
+        public string jwt;
     }
 
     private void OnLoginSucces(LoginResult result)
@@ -97,16 +181,16 @@ public class LoginPagePlayfab : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void RecoverUser()
-    {
-        var request = new SendAccountRecoveryEmailRequest
-        {
-            Email = EmailRecoveryInput.text,
-            TitleId = "73C38",
-        };
+    //public void RecoverUser()
+    //{
+    //    var request = new SendAccountRecoveryEmailRequest
+    //    {
+    //        Email = EmailRecoveryInput.text,
+    //        TitleId = "73C38",
+    //    };
 
-        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnRecoverySucces, OnErrorRecovery);
-    }
+    //    PlayFabClientAPI.SendAccountRecoveryEmail(request, OnRecoverySucces, OnErrorRecovery);
+    //}
 
     private void OnErrorRecovery(PlayFabError result)
     {
@@ -135,21 +219,21 @@ public class LoginPagePlayfab : MonoBehaviour
     {
         LoginPage.SetActive(true);
         RegisterPage.SetActive(false);
-        RecoverPage.SetActive(false);
+        //RecoverPage.SetActive(false);
         TopText.text = "Login";
     }
     public void OpenRegisterPage()
     {
         LoginPage.SetActive(false);
         RegisterPage.SetActive(true);
-        RecoverPage.SetActive(false);
+        //RecoverPage.SetActive(false);
         TopText.text = "Register";
     }
     public void OpenRecoveryPage()
     {
         LoginPage.SetActive(false);
         RegisterPage.SetActive(false);
-        RecoverPage.SetActive(true);
+        //RecoverPage.SetActive(true);
         TopText.text = "Recovery";
     }
 
