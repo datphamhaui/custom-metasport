@@ -5034,10 +5034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _move: {x: 0, y: 0}
-  _look: {x: 0, y: 0}
-  _jump: 0
-  _sprint: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1

@@ -6,14 +6,14 @@ public class Mouselock_controller : MonoBehaviour
     MonoBehaviour cameraScript;
     PlayerInput player;
     public GameObject cursor;
-    public static bool isLocked=false;
+    public static bool isLocked = false;
     bool playerIsIn = false;
     bool withControl = true;
 
     // Update is called once per frame
     private void Start()
     {
-        cameraScript=GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineBrain>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineBrain>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -29,7 +29,7 @@ public class Mouselock_controller : MonoBehaviour
     {
         if (withControl)
         {
-            
+
             if (isLocked)
             {
                 deblocking();
@@ -46,7 +46,7 @@ public class Mouselock_controller : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
-            
+
         }
     }
     public void locking(bool control)
@@ -77,6 +77,6 @@ public class Mouselock_controller : MonoBehaviour
         cameraScript.enabled = true;
         player.enabled = true;
 
-        
+
     }
 }

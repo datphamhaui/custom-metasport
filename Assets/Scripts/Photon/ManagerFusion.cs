@@ -11,7 +11,7 @@ public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
     #region
     [SerializeField] public GameObject[] _playerPrefabs;
     [SerializeField] private GameObject loadingPanel;
-
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
     #endregion
 
@@ -73,15 +73,26 @@ public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("OnPlayerJoined " + PlayerPrefs.GetInt("IndexPrefabs"));
-        GameObject _playerPrefabSelected = _playerPrefabs[MyClikc.x];
-        Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
-        NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
+
+        if (runner.IsServer)
+        {
+            GameObject _playerPrefabSelected = _playerPrefabs[MyClikc.x];
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
+            
+            _spawnedCharacters.Add(player, networkPlayerObject);
+        }
         loadingPanel.SetActive(false);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("OnPlayerLeft");
+        if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
+        {
+            runner.Despawn(networkObject);
+            _spawnedCharacters.Remove(player);
+        }
 
     }
 
