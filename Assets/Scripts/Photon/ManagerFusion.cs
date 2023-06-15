@@ -74,24 +74,15 @@ public class ManagerFusion : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log("OnPlayerJoined " + PlayerPrefs.GetInt("IndexPrefabs"));
-        loadingPanel.SetActive(false);
-        GameObject _playerPrefabSelected = _playerPrefabs[1];
-        Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
-        NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
-        Debug.Log("networkPlayerObject " + networkPlayerObject);
-        if (player == runner.LocalPlayer)
+        if (runner.IsServer)
         {
-            Debug.Log("runner.LocalPlayer");
-            Debug.Log( networkPlayerObject.transform.GetChild(2).transform);
-            _virtualCamera.Follow = networkPlayerObject.transform.GetChild(2).transform;
-            _virtualCamera.LookAt = networkPlayerObject.transform.GetChild(2).transform;
-            Debug.Log("Local Player");
-        }
-        _spawnedCharacters.Add(player, networkPlayerObject);
+            GameObject _playerPrefabSelected = _playerPrefabs[1];
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-5, 5), 0.1f, UnityEngine.Random.Range(0, 7));
+            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefabSelected, spawnPosition, Quaternion.identity, player);
+            _spawnedCharacters.Add(player, networkPlayerObject);
 
-        
-        
+        }
+        loadingPanel.SetActive(false);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
